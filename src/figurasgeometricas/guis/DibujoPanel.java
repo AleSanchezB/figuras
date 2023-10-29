@@ -12,16 +12,12 @@ public class DibujoPanel extends javax.swing.JPanel{
     }
     public void agregarFigura(Figura figura){
         figuras.addElement(figura);
+        repaint();
     }
 
-    public void dibujarFiguras(java.awt.Graphics g){
-        for(int i = 0; i < figuras.size(); i++){
-            figuras.get(i).pintar(g);
-        }
-    }
     @Override
-    public void paint(java.awt.Graphics g){
-        System.out.println("paint");
+    public void paintComponent(java.awt.Graphics g){
+        super.paintComponent(g);
         for(int i = 0; i < figuras.size(); i++){
             figuras.get(i).pintar(g);
         }
