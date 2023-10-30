@@ -6,7 +6,6 @@ import java.awt.Point;
 import javax.swing.JRadioButton;
 import javax.swing.AbstractButton;
 import java.util.Enumeration;
-import figurasgeometricas.guis.DibujoPanel;
 import figurasgeometricas.figuras.Linea;
 import figurasgeometricas.figuras.Ovalo;
 import figurasgeometricas.figuras.Rectangulo;
@@ -18,10 +17,12 @@ public class MenuPanel extends javax.swing.JPanel {
     private javax.swing.ButtonGroup buttonGroup;
     private javax.swing.JSpinner spinner;
     private DibujoPanel dp;
-
+    private javax.swing.border.Border borde;
+    private java.util.HashMap<String, Color> colores;
+    
     public MenuPanel(DibujoPanel dp) {
         this.dp = dp;
-        this.setBackground(Color.CYAN);
+         //this.setBackground(Color.CYAN);
         this.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
         this.setPreferredSize(new java.awt.Dimension(150, 600));
         String labelsColores[] = { "Negro", "Azul", "Rojo", "Verde", "Naranja", "Rosa" };
@@ -31,9 +32,22 @@ public class MenuPanel extends javax.swing.JPanel {
         buttonGroup = new javax.swing.ButtonGroup();
         spinner = new javax.swing.JSpinner();
         list = new javax.swing.JComboBox<String>();
+        colores = new java.util.HashMap<String, Color>();
 
+        colores.put("Negro", Color.BLACK);
+        colores.put("Azul", Color.BLUE);
+        colores.put("Rojo", Color.RED);
+        colores.put("Verde", Color.GREEN);
+        colores.put("Naranja", Color.ORANGE);
+        colores.put("Rosa", Color.PINK);
+        
         spinner.setPreferredSize(new java.awt.Dimension(80, 24));
         spinner.addChangeListener(new EscuchadorSpinner(spinner));
+
+        borde = javax.swing.BorderFactory.createTitledBorder("Menu");
+        // Aplicar el borde al panel
+        this.setBorder(borde);
+
         for (int i = 0; i < figuras.length; i++) {
             radioButtons[i] = new JRadioButton(figuras[i]);
             buttonGroup.add(radioButtons[i]);
@@ -83,28 +97,7 @@ public class MenuPanel extends javax.swing.JPanel {
     }
 
     private Color obtenerColor(String item) {
-        Color color = null;
-        switch (item) {
-            case "Negro":
-                color = Color.BLACK;
-                break;
-            case "Azul":
-                color = Color.BLUE;
-                break;
-            case "Rojo":
-                color = Color.RED;
-                break;
-            case "Verde":
-                color = Color.GREEN;
-                break;
-            case "Naranja":
-                color = Color.ORANGE;
-                break;
-            case "Rosa":
-                color = Color.PINK;
-                break;
-        }
-        return color;
+        return colores.getOrDefault(item, Color.BLACK);
     }
 }
 

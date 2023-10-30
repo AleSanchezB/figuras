@@ -5,10 +5,13 @@ import figurasgeometricas.figuras.Figura;
 
 public class DibujoPanel extends javax.swing.JPanel{
 
-    Vector<Figura>figuras;
-
+    private Vector<Figura>figuras;
+    private javax.swing.border.Border borde;
     public DibujoPanel(){
         figuras = new Vector<Figura>();
+        this.setLayout(new java.awt.FlowLayout());
+        borde = javax.swing.BorderFactory.createTitledBorder("Menu");
+        this.setBorder(borde);
     }
     public void agregarFigura(Figura figura){
         figuras.addElement(figura);
