@@ -1,13 +1,14 @@
 package figurasgeometricas.guis;
 
 import figurasgeometricas.eventos.EscuchadorDibujo;
+import figurasgeometricas.eventos.EscuchadorVentana;
 
-public class VentanaPrincipal extends javax.swing.JFrame{
+public class VentanaPrincipal extends javax.swing.JFrame {
 
-    MenuPanel menupanel;
-    DibujoPanel dibujopanel;
-    
-    public VentanaPrincipal(){
+    private MenuPanel menupanel;
+    private DibujoPanel dibujopanel;
+
+    public VentanaPrincipal() {
         this.setTitle("Dibujo de Braulio Sanchez");
         this.setBounds(0, 0, 800, 600);
         this.setLocationRelativeTo(this);
@@ -16,10 +17,11 @@ public class VentanaPrincipal extends javax.swing.JFrame{
         dibujopanel = new DibujoPanel();
         menupanel = new MenuPanel(dibujopanel);
 
-        dibujopanel.addMouseListener(new EscuchadorDibujo(menupanel));
+        dibujopanel.addMouseListener(new EscuchadorDibujo(menupanel, dibujopanel));
         getContentPane().add(menupanel, java.awt.BorderLayout.WEST);
         getContentPane().add(dibujopanel, java.awt.BorderLayout.CENTER);
-        //this.pack();
+        this.addWindowListener(new EscuchadorVentana());
+        this.setResizable(false);
         this.setVisible(true);
     }
 }

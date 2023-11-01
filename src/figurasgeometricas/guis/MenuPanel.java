@@ -4,8 +4,8 @@ import java.awt.Color;
 import java.awt.Point;
 
 import javax.swing.JRadioButton;
-import javax.swing.AbstractButton;
-import java.util.Enumeration;
+
+import figurasgeometricas.figuras.Figura;
 import figurasgeometricas.figuras.Linea;
 import figurasgeometricas.figuras.Ovalo;
 import figurasgeometricas.figuras.Rectangulo;
@@ -21,13 +21,13 @@ public class MenuPanel extends javax.swing.JPanel {
     private java.util.HashMap<String, Color> colores;
     
     public MenuPanel(DibujoPanel dp) {
-        this.dp = dp;
-         //this.setBackground(Color.CYAN);
-        this.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
-        this.setPreferredSize(new java.awt.Dimension(150, 600));
         String labelsColores[] = { "Negro", "Azul", "Rojo", "Verde", "Naranja", "Rosa" };
         String figuras[] = { "Linea", "Rectangulo", "Ovalo" };
 
+        this.dp = dp;
+        this.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+        this.setPreferredSize(new java.awt.Dimension(150, 600));
+        
         radioButtons = new JRadioButton[3];
         buttonGroup = new javax.swing.ButtonGroup();
         spinner = new javax.swing.JSpinner();
@@ -53,48 +53,24 @@ public class MenuPanel extends javax.swing.JPanel {
             buttonGroup.add(radioButtons[i]);
             this.add(radioButtons[i]);
         }
-        this.add(list);
-        this.add(spinner);
-        this.radioButtons[0].setSelected(true);
+        
         for (int i = 0; i < labelsColores.length; i++) {
             list.addItem(labelsColores[i]);
         }
+        
+        this.add(list);
+        this.add(spinner);
+        this.radioButtons[0].setSelected(true);
     }
 
-    public void crearFigura(Point p1, Point p2) {
+    public Figura crearFigura(Point p1, Point p2) {
 
-        // Luego, para obtener el botón seleccionado y su etiqueta:
-        JRadioButton selectedButton = null;
-
-        // Iterar a través de los botones del grupo para encontrar el seleccionado
-        for (Enumeration<AbstractButton> buttons = buttonGroup.getElements(); buttons.hasMoreElements();) {
-            AbstractButton button = buttons.nextElement();
-            if (button.isSelected()) {
-                selectedButton = (JRadioButton) button;
-                break;
-            }
-        }
-
-        String fig = selectedButton.getText();
-
-        switch (fig) {
-            case "Linea":
-                dp.agregarFigura(
-                        new Linea(p1, p2, obtenerColor(list.getSelectedItem().toString()), (int) spinner.getValue()));
-                break;
-            case "Rectangulo":
-                dp.agregarFigura(
-                        new Rectangulo(p1, p2, obtenerColor(list.getSelectedItem().toString()),
-                                (int) spinner.getValue()));
-                break;
-            case "Ovalo":
-                dp.agregarFigura(
-                        new Ovalo(p1, p2, obtenerColor(list.getSelectedItem().toString()), (int) spinner.getValue()));
-                break;
-            default:
-                break;
-        }
-    }
+        if(radioButtons[0].isSelected())
+            return new Linea(p1, p2, obtenerColor(list.getSelectedItem().toString()), (int) spinner.getValue());
+        else if (radioButtons[1].isSelected())
+            return new Rectangulo(p1, p2, obtenerColor(list.getSelectedItem().toString()),  (int) spinner.getValue());
+         return new Ovalo(p1, p2, obtenerColor(list.getSelectedItem().toString()), (int) spinner.getValue());
+     }
 
     private Color obtenerColor(String item) {
         return colores.getOrDefault(item, Color.BLACK);

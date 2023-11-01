@@ -1,3 +1,6 @@
+/*
+  Autor: Braulio Alessandro Sanchez Bermudez
+ */
 import figurasgeometricas.guis.*;
     
 public class Principal{
